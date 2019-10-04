@@ -6,13 +6,7 @@
 <body>
     <h1>Arduino Control</h1>
 
-    Leer Estado led 1
-    Leer Estado led 2
-    prender led 1
-    prender led 2
-    Prender con valor analógico
-    Parpadeo de led con la frecuencia indicada
-    Apagar todos los leds
+
 
     <button id="read-switch-0" type='button'>R,S0</button>
     <button id="read-switch-1" type='button'>R,S1</button>
@@ -20,11 +14,34 @@
     <button id="turn-off-led-2" type='button'>W,L2,0</button>
     <button id="turn-on-led-1" type='button'>W,L1,1</button>
     <button id="turn-on-led-2" type='button'>W,L2,1</button>
-    <button id="turn-on-led-1" type='button'>Prender led 2</button>
-    <button id="turn-on-led-1-analogic" type='button'>Activar led1 analogico</button>
-    <input type="text" id="analogic-value-1" placeholder="Valor analógico 1">
-    <button id="turn-on-led-2-analogic" type='button'>Activar led1 analogico</button>
-    <input type="text" id="analogic-value-2" placeholder="Valor analógico 2">
+
+    <!-- Requires validation with the input field -->
+    <div>
+        <button id="turn-on-led-1-analogic" type='button'>A,L1</button>
+        <button id="turn-on-led-2-analogic" type='button'>Activar led1 analogico</button>
+    </div>
+
+
+    <!-- Requires validation with the input field-->
+    <div>
+        <button id="turn-on-led-2-analogic" type='button'>A,L2</button>
+        <input type="text" id="analogic-value-1" placeholder="Analogic value 1">
+    </div>
+
+    <!-- Requires validation with the input field-->
+    <div>
+        <button id="frequency-pulses-led-1" type='button'>B,L1</button>
+        <input type="text" id="frequency-value-1" placeholder="Frequency value 1">
+    </div>
+
+     <!-- Requires validation with the input field-->
+     <div>
+        <button id="frequency-pulses-led-2" type='button'>B,L2</button>
+        <input type="text" id="frequency-value-2" placeholder="Frequency value 2">
+    </div>
+
+    <button id="frequency-pulses-led-1" type='button'>O</button>
+    
 
 
 
