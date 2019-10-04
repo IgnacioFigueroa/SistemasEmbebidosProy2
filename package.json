@@ -1,0 +1,14 @@
+{
+  "name": "arduinocontrol",
+  "version": "1.0.0",
+  "description": "Desktop app for controlling arduino",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Ignacio Figueroa",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^6.0.11"
+  }
+}
