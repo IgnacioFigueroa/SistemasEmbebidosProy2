@@ -1,54 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Arduino Control</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div style="text-align: center">
         <h1>Arduino Control</h1>
 
-
-
-        <button id="read-switch-0"  class='btn btn-dark' type='button'>R,S0  </button>
-        <button id="read-switch-1"  class='btn btn-dark' type='button'>R,S1  </button>
-        <button id="turn-off-led-1" class='btn btn-info' type='button'>W,L1,0</button>
-        <button id="turn-off-led-2" class='btn btn-info' type='button'>W,L2,0</button>
-        <button id="turn-on-led-1"  class='btn btn-info' type='button'>W,L1,1</button>
-        <button id="turn-on-led-2"  class='btn btn-info' type='button'>W,L2,1</button>
-
-        <!-- Requires validation with the input field -->
+        <button type="button" id="set-port" placeholder="Port number">Setear puerto</button>
+        <input type="text" id="port-number">
+        <div>
+            <button id="read-switch-0"  class='btn btn-dark' type='button'>R,S0  </button>
+            <button id="read-switch-1"  class='btn btn-dark' type='button'>R,S1  </button>
+            <button id="turn-off-led-1" class='btn btn-info' type='button'>W,L1,0</button>
+            <button id="turn-off-led-2" class='btn btn-info' type='button'>W,L2,0</button>
+            <button id="turn-on-led-1"  class='btn btn-info' type='button'>W,L1,1</button>
+            <button id="turn-on-led-2"  class='btn btn-info' type='button'>W,L2,1</button>
+        </div>
+        
+    <!-- Requires validation with the input field -->
         <div>
             <button id="turn-on-led-1-analogic" class='btn btn-secondary' type='button'>A,L1</button>
-            <button id="turn-on-led-2-analogic" class='btn btn-warning' type='button'>Activar led1 analogico</button>
-        </div>
-
-
-        <!-- Requires validation with the input field-->
-        <div>
-            <button id="turn-on-led-2-analogic" class='btn btn-secondary' type='button'>A,L2</button>
             <input type="text" id="analogic-value-1" placeholder="Analogic value 1">
         </div>
-
         <!-- Requires validation with the input field-->
         <div>
-            <button id="frequency-pulses-led-1" class='btn btn-light' type='button'>B,L1</button>
-            <input type="text" id="frequency-value-1" placeholder="Frequency value 1">
+            <button id="turn-on-led-2-analogic" type='button'>A,L2</button>
+            <input type="text" id="analogic-value-2" placeholder="Analogic value 2">
         </div>
-
+            <!-- Requires validation with the input field-->
+            <div>
+                <button id="frequency-pulses-led-1" class='btn btn-light' type='button'>B,L1</button>
+                <input type="text" id="frequency-value-1" placeholder="Frequency value 1">
+            </div>
         <!-- Requires validation with the input field-->
         <div>
-            <button id="frequency-pulses-led-2" class='btn btn-light' type='button'>B,L2</button>
+            <button id="frequency-pulses-led-2" type='button'>B,L2</button>
             <input type="text" id="frequency-value-2" placeholder="Frequency value 2">
         </div>
 
-        <button id="frequency-pulses-led-1" class='btn btn-success' type='button'>O</button>
+        <button id="turn-off-all" type='button' class="btn btn-success">O</button>
+        <p></p>
+        <div class="alert alert-info" style="text-align: justify" role="alert">
+            <h4 class="alert-heading">Instructions</h4>
+            <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+            <hr>
+            <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+        </div>
+        <!-- <script type="text/javascript" src="./functionalities.js"></script> -->
+        <script>
+            const electron = require('electron');
+            const {
+                ipcRenderer
+            } = electron;
+            const setPort = document.getElementById("set-port");
+
+            setPort.addEventListener('click', () => {
+                const port = document.getElementById("port-number");
+                if(parseInt(port, 10)){
+                    ipcRenderer.send('set-port', port);
+                }
+                
+            });
+
+            const readSwitch0 = document.getElementById("read-switch-0")
+            readSwitch0.addEventListener('click', () => {
+                console.log("enviando");
+                ipcRenderer.send('read-switch-0');
+            });
+
+            const readSwitch1 = document.getElementById("read-switch-1")
+            readSwitch0.addEventListener('click', () => {
+                console.log("enviando");
+                ipcRenderer.send('read-switch-1');
+            });
+
+            const turnOnLed1 = document.getElementById("turn-on-led-1")
+            turnOnLed1.addEventListener('click', () => {
+                ipcRenderer.send('turn-on-led-1');
+            });
+
+            const turnOnLed2 = document.getElementById("turn-on-led-2")
+            turnOnLed1.addEventListener('click', () => {
+                ipcRenderer.send('turn-on-led-2');
+            });
+
+            const turnOffLed1 = document.getElementById("turn-off-led-1")
+            turnOnLed1.addEventListener('click', () => {
+                ipcRenderer.send('turn-off-led-1');
+            })
+
+            const turnOffLed2 = document.getElementById("turn-off-led-2")
+            turnOnLed1.addEventListener('click', () => {
+                ipcRenderer.send('turn-off-led-2');
+            });
+
+            const turnOnLed1Analogic = document.getElementById('turn-on-led-1-analogic')
+            turnOnLed1Analogic.addEventListener('click', () => {
+                const analogicValue1 = document.getElementById('analogic-value-1').value;
+                console.log('entre');
+                if ((parseInt(analogicValue1, 10) || analogicValue1 == '0') && 0 <= parseInt(analogicValue1, 10) &&
+                    parseInt(analogicValue1, 10) <= 255) {
+                    console.log('pase validacon');
+                    ipcRenderer.send('turn-on-led-1-analogic', analogicValue1);
+                }
+            });
+
+            const turnOnLed2Analogic = document.getElementById('turn-on-led-2-analogic');
+            turnOnLed2Analogic.addEventListener('click', () => {
+                const analogicValue2 = document.getElementById('analogic-value-2').value;
+                if ((parseInt(analogicValue2, 10) || analogicValue2 == '0') && 0 <= parseInt(analogicValue2, 10) &&
+                    parseInt(analogicValue2, 10) <= 255) {
+                    ipcRenderer.send('turn-on-led-2-analogic', analogicValue2);
+                }
+            });
+
+            const frequencyPulsesLed1 = document.getElementById('frequency-pulses-led-1');
+            frequencyPulsesLed1.addEventListener('click', () => {
+            const frequencyValue1 = document.getElementById('frequency-value-1').value;
+                if (parseInt(frequencyValue1) && 1 <= parseInt(frequencyValue1) && parseInt(frequencyValue1) <= 100) {
+                    ipcRenderer.send('frequency-pulses-led-1', frequencyValue1);
+                }
+            });
+
+            const frequencyPulsesLed2 = document.getElementById('frequency-pulses-led-2');
+            const frequencyValue2 = document.getElementById('frequency-value-2').value;
+            frequencyPulsesLed2.addEventListener('click', () => {
+                if (parseInt(frequencyValue2) && 1 <= parseInt(frequencyValue2) && parseInt(frequencyValue2) <= 100) {
+                    ipcRenderer.send('frequency-pulses-led-2', frequencyValue2);
+                }
+            })
+
+            const turnOffAll = document.getElementById('turn-off-all')
+            turnOffAll.addEventListener('click', () => {
+                ipcRenderer.send('turn-off-all');
+            })
+        </script>
+
     </div>
-    
-
-
-
-
-
 </body>
 </html>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
