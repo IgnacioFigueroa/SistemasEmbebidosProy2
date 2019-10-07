@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Arduino Control</title>
+
 </head>
+
 <body>
     <h1>Arduino Control</h1>
 
 
-
+    <button type="button" id="set-port">Setear puerto</button>
     <button id="read-switch-0" type='button'>R,S0</button>
     <button id="read-switch-1" type='button'>R,S1</button>
     <button id="turn-off-led-1" type='button'>W,L1,0</button>
@@ -18,14 +21,14 @@
     <!-- Requires validation with the input field -->
     <div>
         <button id="turn-on-led-1-analogic" type='button'>A,L1</button>
-        <button id="turn-on-led-2-analogic" type='button'>Activar led1 analogico</button>
+        <input type="text" id="analogic-value-1" placeholder="Analogic value 1">
     </div>
 
 
     <!-- Requires validation with the input field-->
     <div>
         <button id="turn-on-led-2-analogic" type='button'>A,L2</button>
-        <input type="text" id="analogic-value-1" placeholder="Analogic value 1">
+        <input type="text" id="analogic-value-2" placeholder="Analogic value 2">
     </div>
 
     <!-- Requires validation with the input field-->
@@ -34,18 +37,103 @@
         <input type="text" id="frequency-value-1" placeholder="Frequency value 1">
     </div>
 
-     <!-- Requires validation with the input field-->
-     <div>
+    <!-- Requires validation with the input field-->
+    <div>
         <button id="frequency-pulses-led-2" type='button'>B,L2</button>
         <input type="text" id="frequency-value-2" placeholder="Frequency value 2">
     </div>
 
-    <button id="frequency-pulses-led-1" type='button'>O</button>
-    
+    <button id="turn-off-all" type='button'>O</button>
 
+    <!-- <script type="text/javascript" src="./functionalities.js"></script> -->
 
+    <script>
+        const electron = require('electron');
+        const {
+            ipcRenderer
+        } = electron;
+        const setPort = document.getElementById("set-port");
 
+        setPort.addEventListener('click', () => {
+            const port = "COM5";
+            ipcRenderer.send('set-port', port);
+        });
+
+        const readSwitch0 = document.getElementById("read-switch-0")
+        readSwitch0.addEventListener('click', () => {
+            console.log("enviando");
+            ipcRenderer.send('read-switch-0');
+        });
+
+        const readSwitch1 = document.getElementById("read-switch-1")
+        readSwitch0.addEventListener('click', () => {
+            console.log("enviando");
+            ipcRenderer.send('read-switch-1');
+        });
+
+        const turnOnLed1 = document.getElementById("turn-on-led-1")
+        turnOnLed1.addEventListener('click', () => {
+            ipcRenderer.send('turn-on-led-1');
+        });
+
+        const turnOnLed2 = document.getElementById("turn-on-led-2")
+        turnOnLed1.addEventListener('click', () => {
+            ipcRenderer.send('turn-on-led-2');
+        });
+
+        const turnOffLed1 = document.getElementById("turn-off-led-1")
+        turnOnLed1.addEventListener('click', () => {
+            ipcRenderer.send('turn-off-led-1');
+        })
+
+        const turnOffLed2 = document.getElementById("turn-off-led-2")
+        turnOnLed1.addEventListener('click', () => {
+            ipcRenderer.send('turn-off-led-2');
+        });
+
+        const turnOnLed1Analogic = document.getElementById('turn-on-led-1-analogic')
+        turnOnLed1Analogic.addEventListener('click', () => {
+            const analogicValue1 = document.getElementById('analogic-value-1').value;
+            console.log('entre');
+            if ((parseInt(analogicValue1, 10) || analogicValue1 == '0') && 0 <= parseInt(analogicValue1, 10) &&
+                parseInt(analogicValue1, 10) <= 255) {
+                console.log('pase validacon');
+                ipcRenderer.send('turn-on-led-1-analogic', analogicValue1);
+            }
+        });
+
+        const turnOnLed2Analogic = document.getElementById('turn-on-led-2-analogic');
+        turnOnLed2Analogic.addEventListener('click', () => {
+            const analogicValue2 = document.getElementById('analogic-value-2').value;
+            if ((parseInt(analogicValue2, 10) || analogicValue2 == '0') && 0 <= parseInt(analogicValue2, 10) &&
+                parseInt(analogicValue2, 10) <= 255) {
+                ipcRenderer.send('turn-on-led-2-analogic', analogicValue2);
+            }
+        });
+
+        const frequencyPulsesLed1 = document.getElementById('frequency-pulses-led-1');
+        frequencyPulsesLed1.addEventListener('click', () => {
+        const frequencyValue1 = document.getElementById('frequency-value-1').value;
+            if (parseInt(frequencyValue1) && 1 <= parseInt(frequencyValue1) && parseInt(frequencyValue1) <= 100) {
+                ipcRenderer.send('frequency-pulses-led-1', frequencyValue1);
+            }
+        });
+
+        const frequencyPulsesLed2 = document.getElementById('frequency-pulses-led-2');
+        const frequencyValue2 = document.getElementById('frequency-value-2').value;
+        frequencyPulsesLed2.addEventListener('click', () => {
+            if (parseInt(frequencyValue2) && 1 <= parseInt(frequencyValue2) && parseInt(frequencyValue2) <= 100) {
+                ipcRenderer.send('frequency-pulses-led-2', frequencyValue2);
+            }
+        })
+
+        const turnOffAll = document.getElementById('turn-off-all')
+        turnOffAll.addEventListener('click', () => {
+            ipcRenderer.send('turn-off-all');
+        })
+    </script>
 
 
 </body>
+
 </html>
