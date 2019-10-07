@@ -10,7 +10,8 @@
     <h1>Arduino Control</h1>
 
 
-    <button type="button" id="set-port">Setear puerto</button>
+    <button type="button" id="set-port" placeholder="Port number">Setear puerto</button>
+    <input type="text" id="port-number">
     <button id="read-switch-0" type='button'>R,S0</button>
     <button id="read-switch-1" type='button'>R,S1</button>
     <button id="turn-off-led-1" type='button'>W,L1,0</button>
@@ -55,8 +56,11 @@
         const setPort = document.getElementById("set-port");
 
         setPort.addEventListener('click', () => {
-            const port = "COM5";
-            ipcRenderer.send('set-port', port);
+            const port = document.getElementById("port-number");
+            if(parseInt(port, 10)){
+                ipcRenderer.send('set-port', port);
+            }
+            
         });
 
         const readSwitch0 = document.getElementById("read-switch-0")

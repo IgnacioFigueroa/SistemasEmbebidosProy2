@@ -36,7 +36,7 @@ app.on('ready',() =>{
 
 //
 ipcMain.on("set-port", (e, item) =>{
-    port = new SerialPort(item, {baudRate: 9600});
+    port = new SerialPort(item, {baudRate: 115200});
     port.pipe(parser)
 });
 
