@@ -4,43 +4,45 @@
     <title>Arduino Control</title>
 </head>
 <body>
-    <h1>Arduino Control</h1>
+    <div style="text-align: center">
+        <h1>Arduino Control</h1>
 
 
 
-    <button id="read-switch-0" type='button'>R,S0</button>
-    <button id="read-switch-1" type='button'>R,S1</button>
-    <button id="turn-off-led-1" type='button'>W,L1,0</button>
-    <button id="turn-off-led-2" type='button'>W,L2,0</button>
-    <button id="turn-on-led-1" type='button'>W,L1,1</button>
-    <button id="turn-on-led-2" type='button'>W,L2,1</button>
+        <button id="read-switch-0"  class='btn btn-dark' type='button'>R,S0  </button>
+        <button id="read-switch-1"  class='btn btn-dark' type='button'>R,S1  </button>
+        <button id="turn-off-led-1" class='btn btn-info' type='button'>W,L1,0</button>
+        <button id="turn-off-led-2" class='btn btn-info' type='button'>W,L2,0</button>
+        <button id="turn-on-led-1"  class='btn btn-info' type='button'>W,L1,1</button>
+        <button id="turn-on-led-2"  class='btn btn-info' type='button'>W,L2,1</button>
 
-    <!-- Requires validation with the input field -->
-    <div>
-        <button id="turn-on-led-1-analogic" type='button'>A,L1</button>
-        <button id="turn-on-led-2-analogic" type='button'>Activar led1 analogico</button>
+        <!-- Requires validation with the input field -->
+        <div>
+            <button id="turn-on-led-1-analogic" class='btn btn-secondary' type='button'>A,L1</button>
+            <button id="turn-on-led-2-analogic" class='btn btn-warning' type='button'>Activar led1 analogico</button>
+        </div>
+
+
+        <!-- Requires validation with the input field-->
+        <div>
+            <button id="turn-on-led-2-analogic" class='btn btn-secondary' type='button'>A,L2</button>
+            <input type="text" id="analogic-value-1" placeholder="Analogic value 1">
+        </div>
+
+        <!-- Requires validation with the input field-->
+        <div>
+            <button id="frequency-pulses-led-1" class='btn btn-light' type='button'>B,L1</button>
+            <input type="text" id="frequency-value-1" placeholder="Frequency value 1">
+        </div>
+
+        <!-- Requires validation with the input field-->
+        <div>
+            <button id="frequency-pulses-led-2" class='btn btn-light' type='button'>B,L2</button>
+            <input type="text" id="frequency-value-2" placeholder="Frequency value 2">
+        </div>
+
+        <button id="frequency-pulses-led-1" class='btn btn-success' type='button'>O</button>
     </div>
-
-
-    <!-- Requires validation with the input field-->
-    <div>
-        <button id="turn-on-led-2-analogic" type='button'>A,L2</button>
-        <input type="text" id="analogic-value-1" placeholder="Analogic value 1">
-    </div>
-
-    <!-- Requires validation with the input field-->
-    <div>
-        <button id="frequency-pulses-led-1" type='button'>B,L1</button>
-        <input type="text" id="frequency-value-1" placeholder="Frequency value 1">
-    </div>
-
-     <!-- Requires validation with the input field-->
-     <div>
-        <button id="frequency-pulses-led-2" type='button'>B,L2</button>
-        <input type="text" id="frequency-value-2" placeholder="Frequency value 2">
-    </div>
-
-    <button id="frequency-pulses-led-1" type='button'>O</button>
     
 
 
@@ -49,3 +51,4 @@
 
 </body>
 </html>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
