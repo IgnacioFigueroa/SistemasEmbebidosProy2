@@ -3,22 +3,32 @@
 
 <head>
     <title>Arduino Control</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
+    </script>
 </head>
 
 <body>
+    <div class="alert alert-danger" id="not-found-port" role="alert" style="display: none">
+        Port not established
+    </div>
     <div style="text-align: center">
         <nav style="background-color:#367FBF; -webkit-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
         -moz-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
-        box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);"">
+        box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);">
             <h1>Arduino Control</h1>
         </nav>
-        
 
-        <div class="container" style="width: 70vw; height: 75vh; background-color: #04B2D9; -webkit-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
+
+        <div class=" container" style="width: 70vw; height: 75vh; background-color: #04B2D9; -webkit-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
         -moz-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
         box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);">
             <div>
@@ -27,7 +37,9 @@
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="input-group col-md-6">
-                    <button type="button" id="set-port" placeholder="Port number" style="background-color: #0378A6; border: lightskyblue" class="btn btn-primary">Set Port</button>
+                    <button type="button" id="set-port" placeholder="Port number"
+                        style="background-color: #0378A6; border: lightskyblue" class="btn btn-primary">Set
+                        Port</button>
                     <input type="text" class="form-control" id="port-number">
                 </div>
                 <div class="col-md-3"></div>
@@ -35,56 +47,57 @@
 
             <p></p>
             <div>
-                <button id="read-switch-0"  class='btn btn-dark' type='button'>R,S0  </button>
-                <button id="read-switch-1"  class='btn btn-dark' type='button'>R,S1  </button>
-                <button id="turn-off-led-1" class='btn btn-info' style="background-color: #023859" type='button'>W,L1,0</button>
-                <button id="turn-off-led-2" class='btn btn-info' style="background-color: #023859" type='button'>W,L2,0</button>
-                <button id="turn-on-led-1"  class='btn btn-info' style="background-color: #023859" type='button'>W,L1,1</button>
-                <button id="turn-on-led-2"  class='btn btn-info' style="background-color: #023859" type='button'>W,L2,1</button>
+                <button id="read-switch-0" class='btn btn-dark' type='button'>R,S0 </button>
+                <button id="read-switch-1" class='btn btn-dark' type='button'>R,S1 </button>
+                <button id="turn-off-led-1" class='btn btn-info' style="background-color: #023859"
+                    type='button'>W,L0,0</button>
+                <button id="turn-off-led-2" class='btn btn-info' style="background-color: #023859"
+                    type='button'>W,L1,0</button>
+                <button id="turn-on-led-1" class='btn btn-info' style="background-color: #023859"
+                    type='button'>W,L0,1</button>
+                <button id="turn-on-led-2" class='btn btn-info' style="background-color: #023859"
+                    type='button'>W,L1,1</button>
             </div>
             <p></p>
-        <!-- Requires validation with the input field -->
+            <!-- Requires validation with the input field -->
             <div style="text-align: justify" class="row">
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-10 ">
                     <div class="input-group">
-                        <button id="turn-on-led-1-analogic" class='btn btn-secondary' type='button'>A,L1</button>
+                        <button id="turn-on-led-1-analogic" class='btn btn-secondary' type='button'>A,L0</button>
                         <input type="text" id="analogic-value-1" class="form-control" placeholder="Analogic value 1">
                     </div>
                     <!-- Requires validation with the input field-->
                     <p></p>
                     <div class="input-group">
-                        <button id="turn-on-led-2-analogic" type='button' class="btn btn-secondary">A,L2</button>
+                        <button id="turn-on-led-2-analogic" type='button' class="btn btn-secondary">A,L1</button>
                         <input type="text" id="analogic-value-2" class="form-control" placeholder="Analogic value 2">
                     </div>
-                        <!-- Requires validation with the input field-->
+                    <!-- Requires validation with the input field-->
                     <p></p>
                     <div class="input-group">
-                        <button id="frequency-pulses-led-1" class='btn btn-light' type='button'>B,L1</button>
+                        <button id="frequency-pulses-led-1" class='btn btn-light' type='button'>B,L0</button>
                         <input type="text" id="frequency-value-1" class="form-control" placeholder="Frequency value 1">
                     </div>
                     <!-- Requires validation with the input field-->
                     <p></p>
                     <div class="input-group">
-                        <button id="frequency-pulses-led-2" type='button' class='btn btn-light'>B,L2</button>
+                        <button id="frequency-pulses-led-2" type='button' class='btn btn-light'>B,L1</button>
                         <input type="text" id="frequency-value-2" class="form-control" placeholder="Frequency value 2">
-                    </div>     
-                </div>    
+                    </div>
+                </div>
                 <div class="col-md-1">
-                </div>           
+                </div>
             </div>
             <br>
-            <button id="turn-off-all" type='button' style="background-color: #0378A6; border: lightskyblue" class="btn btn-success btn-lg">O</button>
-            
+            <button id="turn-off-all" type='button' style="background-color: #0378A6; border: lightskyblue"
+                class="btn btn-success btn-lg">O</button>
+            <button id="eeprom-save" type='button' style="background-color: #0378A6; border: lightskyblue"
+                class="btn btn-success btn-lg">E</button>
+
         </div>
-        <br>
-        <div class="alert alert-info" style="text-align: justify" role="alert">
-            <h4 class="alert-heading">Instructions</h4>
-            <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
-            <hr>
-            <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
-        </div>
+
         <!-- <script type="text/javascript" src="./functionalities.js"></script> -->
         <script>
             const electron = require('electron');
@@ -94,22 +107,33 @@
             const setPort = document.getElementById("set-port");
 
             setPort.addEventListener('click', () => {
-                const port = document.getElementById("port-number");
-                if(parseInt(port, 10)){
-                    ipcRenderer.send('set-port', port);
-                }
+
+                const port = document.getElementById("port-number").value;
                 
+                ipcRenderer.send('set-port', {
+                    'port': port
+                });
+
             });
+
+            const notFoundPortAlert = document.getElementById('not-found-port');
+
+            function notFoundPortShow() {
+                notFoundPortAlert.style.display = 'block'
+            }
+
+            function notFoundPortHide() {
+                notFoundPortAlert.style.display = 'none'
+            }
+
 
             const readSwitch0 = document.getElementById("read-switch-0")
             readSwitch0.addEventListener('click', () => {
-                console.log("enviando");
                 ipcRenderer.send('read-switch-0');
             });
 
             const readSwitch1 = document.getElementById("read-switch-1")
-            readSwitch0.addEventListener('click', () => {
-                console.log("enviando");
+            readSwitch1.addEventListener('click', () => {
                 ipcRenderer.send('read-switch-1');
             });
 
@@ -119,17 +143,17 @@
             });
 
             const turnOnLed2 = document.getElementById("turn-on-led-2")
-            turnOnLed1.addEventListener('click', () => {
+            turnOnLed2.addEventListener('click', () => {
                 ipcRenderer.send('turn-on-led-2');
             });
 
             const turnOffLed1 = document.getElementById("turn-off-led-1")
-            turnOnLed1.addEventListener('click', () => {
+            turnOffLed1.addEventListener('click', () => {
                 ipcRenderer.send('turn-off-led-1');
             })
 
             const turnOffLed2 = document.getElementById("turn-off-led-2")
-            turnOnLed1.addEventListener('click', () => {
+            turnOffLed2.addEventListener('click', () => {
                 ipcRenderer.send('turn-off-led-2');
             });
 
@@ -137,7 +161,8 @@
             turnOnLed1Analogic.addEventListener('click', () => {
                 const analogicValue1 = document.getElementById('analogic-value-1').value;
                 console.log('entre');
-                if ((parseInt(analogicValue1, 10) || analogicValue1 == '0') && 0 <= parseInt(analogicValue1, 10) &&
+                if ((parseInt(analogicValue1, 10) || analogicValue1 == '0') && 0 <= parseInt(analogicValue1,
+                        10) &&
                     parseInt(analogicValue1, 10) <= 255) {
                     console.log('pase validacon');
                     ipcRenderer.send('turn-on-led-1-analogic', analogicValue1);
@@ -147,7 +172,8 @@
             const turnOnLed2Analogic = document.getElementById('turn-on-led-2-analogic');
             turnOnLed2Analogic.addEventListener('click', () => {
                 const analogicValue2 = document.getElementById('analogic-value-2').value;
-                if ((parseInt(analogicValue2, 10) || analogicValue2 == '0') && 0 <= parseInt(analogicValue2, 10) &&
+                if ((parseInt(analogicValue2, 10) || analogicValue2 == '0') && 0 <= parseInt(analogicValue2,
+                        10) &&
                     parseInt(analogicValue2, 10) <= 255) {
                     ipcRenderer.send('turn-on-led-2-analogic', analogicValue2);
                 }
@@ -155,16 +181,18 @@
 
             const frequencyPulsesLed1 = document.getElementById('frequency-pulses-led-1');
             frequencyPulsesLed1.addEventListener('click', () => {
-            const frequencyValue1 = document.getElementById('frequency-value-1').value;
-                if (parseInt(frequencyValue1) && 1 <= parseInt(frequencyValue1) && parseInt(frequencyValue1) <= 100) {
+                const frequencyValue1 = document.getElementById('frequency-value-1').value;
+                if (parseInt(frequencyValue1) && 1 <= parseInt(frequencyValue1) && parseInt(frequencyValue1) <=
+                    100) {
                     ipcRenderer.send('frequency-pulses-led-1', frequencyValue1);
                 }
             });
 
             const frequencyPulsesLed2 = document.getElementById('frequency-pulses-led-2');
-            const frequencyValue2 = document.getElementById('frequency-value-2').value;
             frequencyPulsesLed2.addEventListener('click', () => {
-                if (parseInt(frequencyValue2) && 1 <= parseInt(frequencyValue2) && parseInt(frequencyValue2) <= 100) {
+                const frequencyValue2 = document.getElementById('frequency-value-2').value;
+                if (parseInt(frequencyValue2) && 1 <= parseInt(frequencyValue2) && parseInt(frequencyValue2) <=
+                    100) {
                     ipcRenderer.send('frequency-pulses-led-2', frequencyValue2);
                 }
             })
@@ -173,8 +201,27 @@
             turnOffAll.addEventListener('click', () => {
                 ipcRenderer.send('turn-off-all');
             })
+
+            const eepromSave = document.getElementById('eeprom-save');
+            eepromSave.addEventListener('click', () => {
+                ipcRenderer.send('eeprom-save');
+            })
+
+            ipcRenderer.on('not-found-port', (e, item) => {
+                console.log('llego');
+                if (item.status == 404) {
+                    notFoundPortShow;
+                }
+            })
+
+            ipcRenderer.on('success', (e, item) => {
+                if (item.status == 200) {
+                    notFoundPortHide;
+                }
+            })
         </script>
 
     </div>
 </body>
+
 </html>

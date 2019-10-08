@@ -1,7 +1,7 @@
 const electron = require('electron')
 const url = require('url')
 const path = require('path')
-const SerialPort = require('@serialport/stream');
+const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 
 const {app, BrowserWindow, Menu, ipcMain} = electron;
@@ -11,7 +11,7 @@ var port;
 const parser = new Readline();
 //Listen for the app to be ready
 
-app.on('ready',() =>{
+app.on('ready',() => {
     mainWindow = new BrowserWindow({
         webPreferences:{
             nodeIntegration: true
@@ -36,53 +36,187 @@ app.on('ready',() =>{
 
 //
 ipcMain.on("set-port", (e, item) =>{
-    port = new SerialPort(item, {baudRate: 9600});
-    port.pipe(parser)
+    console.log("Boton apretado")
+    SerialPort.list((err, ports) => {
+        console.log("Listando puertos");
+        
+        ports.forEach((eachPort) => {
+        
+            if (eachPort.manufacturer.includes('Arduino')){
+                console.log(eachPort)
+                port = new SerialPort(eachPort.comName, {baudRate: 9600});
+                port.pipe(parser)
+            }
+        })
+    });
+
+    // if(!port){
+    //     port = new SerialPort(item.port, {baudRate: 9600});
+    //     console.log('port set')
+    //     port.pipe(parser)
+    // }
+    
 });
 
 ipcMain.on('read-switch-0', () => {
-    port.write('R,S0');
-    parser.on('data', line => console.log(`> ${line}`));
+    console.log("Entra en el s0");
+    if(port){
+        port.write('R,S0', (err) => {
+            if(err){
+                console.log("Error:", err.message)
+            }
+        });
+        parser.on('data', line => console.log(`> ${line}`));
+        mainWindow.webContents.send('success', {status:200});
+    }else{
+        console.log('nope')
+        mainWindow.webContents.send('not-found-port', {status:404})
+    }
 });
 
 ipcMain.on('read-switch-1', () => {
-    port.write('R,S1');
-    parser.on('data', line => console.log(`> ${line}`));
+    if(port){
+        port.write('R,S1', (err) => {
+            if(err){
+                console.log("Error:", err.message)
+            }
+        });
+        parser.on('data', line => console.log(`> ${line}`));
+        mainWindow.webContents.send('success', {status:200});
+
+    }else{
+        mainWindow.webContents.send('not-found-port', {status:404})
+    }
+    
 });
 
 ipcMain.on('turn-on-led-1', () => {
-    port.write('W,L1,1');
+    if(port){
+        port.write('W,L0,1', (err) => {
+            if(err){
+                console.log("Error:", err.message)
+            }
+        });
+        mainWindow.webContents.send('success', {status:200});
+    }else{
+        mainWindow.webContents.send('not-found-port', {status:404});
+    }
 });
 ipcMain.on('turn-on-led-2', () => {
-    port.write('W,L2,1');
+    if(port){
+        port.write('W,L1,1', (err) => {
+            if(err){
+                console.log("Error:", err.message)
+            }
+        });
+        mainWindow.webContents.send('success', {status:200});
+    }else{
+        mainWindow.webContents.send('not-found-port', {status:404});
+    }
 });
 
 ipcMain.on('turn-off-led-1', () => {
-    port.write('W,L1,0');
+    if(port){
+        port.write('W,L0,0', (err) => {
+            if(err){
+                console.log("Error:", err.message)
+            }
+        });
+        mainWindow.webContents.send('success', {status:200});
+    }else{
+        mainWindow.webContents.send('not-found-port', {status:404});
+    }
 });
 
 ipcMain.on('turn-off-led-2', () => {
-    port.write('W,L2,0');
+    if(port){
+        port.write('W,L1,0', (err) => {
+            if(err){
+                console.log("Error:", err.message)
+            }
+        });
+        mainWindow.webContents.send('success', {status:200});
+    }else{
+        mainWindow.webContents.send('not-found-port', {status:404});
+    }
 });
 
 ipcMain.on('turn-on-led-1-analogic', (e, item) => {
-    port.write(`A,L1,${item}`)
+    if(port){
+        port.write(`A,L0,${item}`, (err) => {
+            if(err){
+                console.log("Error:", err.message)
+            }
+        });
+        mainWindow.webContents.send('success', {status:200});
+    }else{
+        mainWindow.webContents.send('not-found-port', {status:404});
+    }
 })
 
-ipcMain.on('turn-on-led-1-analogic', (e, item) => {
-    port.write(`A,L2,${item}`)
+ipcMain.on('turn-on-led-2-analogic', (e, item) => {
+    if(port){
+        port.write(`A,L1,${item}`, (err) => {
+            if(err){
+                console.log("Error:", err.message)
+            }
+        });
+        mainWindow.webContents.send('success', {status:200});
+    }else{
+        mainWindow.webContents.send('not-found-port', {status:404});
+    }
 })
 
 ipcMain.on('frequency-pulses-led-1', (e, item) => {
-    port.write(`B,L1,${item}`)
+    if(port){
+        port.write(`B,L0,${item}`, (err) => {
+            if(err){
+                console.log("Error:", err.message)
+            }
+        });
+        mainWindow.webContents.send('success', {status:200});
+    }else{
+        mainWindow.webContents.send('not-found-port', {status:404});
+    }
 })
 
 ipcMain.on('frequency-pulses-led-2', (e, item) => {
-    port.write(`B,L2,${item}`)
+    if(port){
+        port.write(`B,L1,${item}`, (err) => {
+            if(err){
+                console.log("Error:", err.message)
+            }
+        });
+        mainWindow.webContents.send('success', {status:200});
+    }else{
+        mainWindow.webContents.send('not-found-port', {status:404});
+    }
 })
 
 ipcMain.on('turn-off-all', () =>{
-    port.write('O')
+    if(port){
+        port.write('O', (err) => {
+            if(err){
+                console.log("Error:", err.message)
+            }
+        });
+        mainWindow.webContents.send('success', {status:200});
+    }else{
+        mainWindow.webContents.send('not-found-port', {status:404});
+    }
+});
+
+ipcMain.on('eeprom-save', () => {
+    if(port){
+        port.write('E', (err) => {
+            if(err){
+                console.log("Error: ", err.message)
+            }
+        });
+        mainWindow.webContents.send('success', {status: 200});
+    }else{
+        mainWindow.webContents.send('not-found-port', {status:404});
+    }
 })
 
 //create main menu
