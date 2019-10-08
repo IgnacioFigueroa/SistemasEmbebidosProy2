@@ -8,7 +8,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </head>
-
 <body>
     <div style="text-align: center">
         <nav style="background-color:#367FBF; -webkit-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
@@ -32,7 +31,6 @@
                 </div>
                 <div class="col-md-3"></div>
             </div>
-
             <p></p>
             <div>
                 <button id="read-switch-0"  class='btn btn-dark' type='button'>R,S0  </button>
@@ -81,9 +79,13 @@
         <p></p>
         <div class="alert alert-info" style="text-align: justify" role="alert">
             <h4 class="alert-heading">Instructions</h4>
-            <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
             <hr>
-            <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+            <p>R, NSwitch: Read the NSwitch switch (S0 or S1) and return a 0 or a 1 depending on whether it is low or high.</p>
+            <p>W, NLed, StatusLed: Writes the LED Nled (L0 or L1) in the status StatusLED (1 or 0).</p>
+            <p>A, NLed, value: Writes the Nled LED (L0 or L1) with the corresponding analog value (PWM) (0 to 255).</p>
+            <p>B, NLed, frequency: Generates High and Low pulses on the NLed LED with the indicated frequency. The unit of frequency is 10ms. 
+                The frequency range is from 1 to 100, that is, with a range of 10ms to 1000ms.</p>
+            <p>Or: Turn off all LEDs.</p>
         </div>
         <!-- <script type="text/javascript" src="./functionalities.js"></script> -->
         <script>
