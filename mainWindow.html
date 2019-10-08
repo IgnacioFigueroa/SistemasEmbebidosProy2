@@ -11,41 +11,73 @@
 
 <body>
     <div style="text-align: center">
-        <h1>Arduino Control</h1>
-
-        <button type="button" id="set-port" placeholder="Port number">Setear puerto</button>
-        <input type="text" id="port-number">
-        <div>
-            <button id="read-switch-0"  class='btn btn-dark' type='button'>R,S0  </button>
-            <button id="read-switch-1"  class='btn btn-dark' type='button'>R,S1  </button>
-            <button id="turn-off-led-1" class='btn btn-info' type='button'>W,L1,0</button>
-            <button id="turn-off-led-2" class='btn btn-info' type='button'>W,L2,0</button>
-            <button id="turn-on-led-1"  class='btn btn-info' type='button'>W,L1,1</button>
-            <button id="turn-on-led-2"  class='btn btn-info' type='button'>W,L2,1</button>
-        </div>
+        <nav style="background-color:#367FBF; -webkit-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);"">
+            <h1>Arduino Control</h1>
+        </nav>
         
-    <!-- Requires validation with the input field -->
-        <div>
-            <button id="turn-on-led-1-analogic" class='btn btn-secondary' type='button'>A,L1</button>
-            <input type="text" id="analogic-value-1" placeholder="Analogic value 1">
-        </div>
-        <!-- Requires validation with the input field-->
-        <div>
-            <button id="turn-on-led-2-analogic" type='button'>A,L2</button>
-            <input type="text" id="analogic-value-2" placeholder="Analogic value 2">
-        </div>
-            <!-- Requires validation with the input field-->
-            <div>
-                <button id="frequency-pulses-led-1" class='btn btn-light' type='button'>B,L1</button>
-                <input type="text" id="frequency-value-1" placeholder="Frequency value 1">
-            </div>
-        <!-- Requires validation with the input field-->
-        <div>
-            <button id="frequency-pulses-led-2" type='button'>B,L2</button>
-            <input type="text" id="frequency-value-2" placeholder="Frequency value 2">
-        </div>
 
-        <button id="turn-off-all" type='button' class="btn btn-success">O</button>
+        <div class="container" style="width: 70vw; height: 75vh; background-color: #04B2D9; -webkit-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);">
+            <div>
+                <h6 style="color: #04B2D9">B</h6>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="input-group col-md-6">
+                    <button type="button" id="set-port" placeholder="Port number" style="background-color: #0378A6; border: lightskyblue" class="btn btn-primary">Set Port</button>
+                    <input type="text" class="form-control" id="port-number">
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+
+            <p></p>
+            <div>
+                <button id="read-switch-0"  class='btn btn-dark' type='button'>R,S0  </button>
+                <button id="read-switch-1"  class='btn btn-dark' type='button'>R,S1  </button>
+                <button id="turn-off-led-1" class='btn btn-info' style="background-color: #023859" type='button'>W,L1,0</button>
+                <button id="turn-off-led-2" class='btn btn-info' style="background-color: #023859" type='button'>W,L2,0</button>
+                <button id="turn-on-led-1"  class='btn btn-info' style="background-color: #023859" type='button'>W,L1,1</button>
+                <button id="turn-on-led-2"  class='btn btn-info' style="background-color: #023859" type='button'>W,L2,1</button>
+            </div>
+            <p></p>
+        <!-- Requires validation with the input field -->
+            <div style="text-align: justify" class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10 ">
+                    <div class="input-group">
+                        <button id="turn-on-led-1-analogic" class='btn btn-secondary' type='button'>A,L1</button>
+                        <input type="text" id="analogic-value-1" class="form-control" placeholder="Analogic value 1">
+                    </div>
+                    <!-- Requires validation with the input field-->
+                    <p></p>
+                    <div class="input-group">
+                        <button id="turn-on-led-2-analogic" type='button' class="btn btn-secondary">A,L2</button>
+                        <input type="text" id="analogic-value-2" class="form-control" placeholder="Analogic value 2">
+                    </div>
+                        <!-- Requires validation with the input field-->
+                    <p></p>
+                    <div class="input-group">
+                        <button id="frequency-pulses-led-1" class='btn btn-light' type='button'>B,L1</button>
+                        <input type="text" id="frequency-value-1" class="form-control" placeholder="Frequency value 1">
+                    </div>
+                    <!-- Requires validation with the input field-->
+                    <p></p>
+                    <div class="input-group">
+                        <button id="frequency-pulses-led-2" type='button' class='btn btn-light'>B,L2</button>
+                        <input type="text" id="frequency-value-2" class="form-control" placeholder="Frequency value 2">
+                    </div>     
+                </div>    
+                <div class="col-md-1">
+                </div>           
+            </div>
+            <p></p>
+            <button id="turn-off-all" type='button' style="background-color: #0378A6; border: lightskyblue" class="btn btn-success btn-lg">O</button>
+            
+        </div>
         <p></p>
         <div class="alert alert-info" style="text-align: justify" role="alert">
             <h4 class="alert-heading">Instructions</h4>
