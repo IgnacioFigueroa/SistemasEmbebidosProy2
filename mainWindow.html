@@ -15,7 +15,6 @@
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
     </script>
 </head>
-
 <body>
     <div class="alert alert-danger" id="not-found-port" role="alert" style="display: none">
         Port not established
@@ -27,8 +26,7 @@
             <h1>Arduino Control</h1>
         </nav>
 
-
-        <div class=" container" style="width: 70vw; height: 75vh; background-color: #04B2D9; -webkit-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
+        <div class="container" style="width: 70vw; height: 80vh; background-color: #04B2D9; -webkit-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
         -moz-box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
         box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);">
             <div>
@@ -44,7 +42,6 @@
                 </div>
                 <div class="col-md-3"></div>
             </div>
-
             <p></p>
             <div>
                 <button id="read-switch-0" class='btn btn-dark' type='button'>R,S0 </button>
@@ -91,11 +88,20 @@
                 </div>
             </div>
             <br>
-            <button id="turn-off-all" type='button' style="background-color: #0378A6; border: lightskyblue"
-                class="btn btn-success btn-lg">O</button>
+            <button id="turn-off-all" type='button' style="background-color: #0378A6; border: lightskyblue" class="btn btn-success btn-lg">O</button>
             <button id="eeprom-save" type='button' style="background-color: #0378A6; border: lightskyblue"
                 class="btn btn-success btn-lg">E</button>
-
+        </div>
+        <br>
+        <div class="alert alert-info" style="text-align: justify" role="alert">
+            <h4 class="alert-heading">Instructions</h4>
+            <hr>
+            <p>R, NSwitch: Read the NSwitch switch (S0 or S1) and return a 0 or a 1 depending on whether it is low or high.</p>
+            <p>W, NLed, StatusLed: Writes the LED Nled (L0 or L1) in the status StatusLED (1 or 0).</p>
+            <p>A, NLed, value: Writes the Nled LED (L0 or L1) with the corresponding analog value (PWM) (0 to 255).</p>
+            <p>B, NLed, frequency: Generates High and Low pulses on the NLed LED with the indicated frequency. The unit of frequency is 10ms. 
+                The frequency range is from 1 to 100, that is, with a range of 10ms to 1000ms.</p>
+            <p>Or: Turn off all LEDs.</p>
         </div>
 
         <!-- <script type="text/javascript" src="./functionalities.js"></script> -->
