@@ -129,12 +129,12 @@
             if (parseInt(frequencyValue2) && 1 <= parseInt(frequencyValue2) && parseInt(frequencyValue2) <= 100) {
                 ipcRenderer.send('frequency-pulses-led-2', frequencyValue2);
             }
-        })
+        });
 
         const turnOffAll = document.getElementById('turn-off-all')
         turnOffAll.addEventListener('click', () => {
             ipcRenderer.send('turn-off-all');
-        })
+        });
     </script>
 
 

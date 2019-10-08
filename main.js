@@ -1,13 +1,13 @@
 const electron = require('electron')
 const url = require('url')
 const path = require('path')
-const SerialPort = require('serialport');
+const SerialPort = require('@serialport/stream');
 const Readline = require('@serialport/parser-readline');
 
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 
 let mainWindow;
-let port;
+var port;
 const parser = new Readline();
 //Listen for the app to be ready
 
@@ -36,7 +36,7 @@ app.on('ready',() =>{
 
 //
 ipcMain.on("set-port", (e, item) =>{
-    port = new SerialPort(item, {baudRate: 115200});
+    port = new SerialPort(item, {baudRate: 9600});
     port.pipe(parser)
 });
 
