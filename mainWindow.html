@@ -104,12 +104,10 @@
             <p>Or: Turn off all LEDs.</p>
         </div>
 
-        <!-- <script type="text/javascript" src="./functionalities.js"></script> -->
+        
         <script>
             const electron = require('electron');
-            const {
-                ipcRenderer
-            } = electron;
+            const {ipcRenderer} = electron;
             const setPort = document.getElementById("set-port");
 
             setPort.addEventListener('click', () => {
@@ -123,7 +121,25 @@
             });
 
             const notFoundPortAlert = document.getElementById('not-found-port');
+            
+            ipcRenderer.on("not-found-port", (e, item) => {
+                console.log('llego not-found');
+                if (item.status == 404) {
+                    notFoundPortShow();
+                }
+            });
 
+            ipcRenderer.on('success', (e, item) => {
+                console.log("llego success");
+                
+                if (item.status == 200) {
+                    notFoundPortHide();
+                }
+            });
+
+            ipcRenderer.on('read-switch-0', (e, item) => {
+                console.log("hola");
+            });
             function notFoundPortShow() {
                 notFoundPortAlert.style.display = 'block'
             }
@@ -131,7 +147,6 @@
             function notFoundPortHide() {
                 notFoundPortAlert.style.display = 'none'
             }
-
 
             const readSwitch0 = document.getElementById("read-switch-0")
             readSwitch0.addEventListener('click', () => {
@@ -172,6 +187,8 @@
                     parseInt(analogicValue1, 10) <= 255) {
                     console.log('pase validacon');
                     ipcRenderer.send('turn-on-led-1-analogic', analogicValue1);
+                }else{
+                    alert("Ingrese un valor válido")
                 }
             });
 
@@ -182,6 +199,8 @@
                         10) &&
                     parseInt(analogicValue2, 10) <= 255) {
                     ipcRenderer.send('turn-on-led-2-analogic', analogicValue2);
+                }else{
+                    alert("Ingrese un valor válido")
                 }
             });
 
@@ -191,6 +210,8 @@
                 if (parseInt(frequencyValue1) && 1 <= parseInt(frequencyValue1) && parseInt(frequencyValue1) <=
                     100) {
                     ipcRenderer.send('frequency-pulses-led-1', frequencyValue1);
+                }else{
+                    alert("Ingrese un valor válido")
                 }
             });
 
@@ -200,31 +221,22 @@
                 if (parseInt(frequencyValue2) && 1 <= parseInt(frequencyValue2) && parseInt(frequencyValue2) <=
                     100) {
                     ipcRenderer.send('frequency-pulses-led-2', frequencyValue2);
+                }else{
+                    alert("Ingrese un valor válido")
                 }
-            })
+            });
 
             const turnOffAll = document.getElementById('turn-off-all')
             turnOffAll.addEventListener('click', () => {
                 ipcRenderer.send('turn-off-all');
-            })
+            });
 
             const eepromSave = document.getElementById('eeprom-save');
             eepromSave.addEventListener('click', () => {
                 ipcRenderer.send('eeprom-save');
-            })
+            });
 
-            ipcRenderer.on('not-found-port', (e, item) => {
-                console.log('llego');
-                if (item.status == 404) {
-                    notFoundPortShow;
-                }
-            })
-
-            ipcRenderer.on('success', (e, item) => {
-                if (item.status == 200) {
-                    notFoundPortHide;
-                }
-            })
+            
         </script>
 
     </div>

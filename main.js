@@ -7,7 +7,7 @@ const Readline = require('@serialport/parser-readline');
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 
 let mainWindow;
-var port;
+let port;
 const parser = new Readline();
 //Listen for the app to be ready
 
@@ -38,23 +38,17 @@ app.on('ready',() => {
 ipcMain.on("set-port", (e, item) =>{
     console.log("Boton apretado")
     SerialPort.list((err, ports) => {
-        console.log("Listando puertos");
-        
         ports.forEach((eachPort) => {
-        
             if (eachPort.manufacturer.includes('Arduino')){
-                console.log(eachPort)
+                if (port){
+                    port.close();
+                }
                 port = new SerialPort(eachPort.comName, {baudRate: 9600});
-                port.pipe(parser)
+                port.pipe(parser);
             }
         })
     });
 
-    // if(!port){
-    //     port = new SerialPort(item.port, {baudRate: 9600});
-    //     console.log('port set')
-    //     port.pipe(parser)
-    // }
     
 });
 
@@ -70,7 +64,7 @@ ipcMain.on('read-switch-0', () => {
         mainWindow.webContents.send('success', {status:200});
     }else{
         console.log('nope')
-        mainWindow.webContents.send('not-found-port', {status:404})
+        mainWindow.webContents.send('not-found-port', {status:404});
     }
 });
 
@@ -85,7 +79,7 @@ ipcMain.on('read-switch-1', () => {
         mainWindow.webContents.send('success', {status:200});
 
     }else{
-        mainWindow.webContents.send('not-found-port', {status:404})
+        mainWindow.webContents.send("not-found-port", {status:404})
     }
     
 });
