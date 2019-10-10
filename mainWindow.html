@@ -15,6 +15,7 @@
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
     </script>
 </head>
+
 <body>
     <div class="alert alert-danger" id="not-found-port" role="alert" style="display: none">
         Port not established
@@ -34,8 +35,8 @@
             </div>
             <p></p>
             <div>
-                <button id="read-switch-0" class='btn btn-dark' type='button'>R,S0 </button>
-                <button id="read-switch-1" class='btn btn-dark' type='button'>R,S1 </button>
+                <button id="read-switch-0-b" class='btn btn-dark' type='button'>R,S0 </button>
+                <button id="read-switch-1-b" class='btn btn-dark' type='button'>R,S1 </button>
                 <button id="turn-off-led-1" class='btn btn-info' style="background-color: #023859"
                     type='button'>W,L0,0</button>
                 <button id="turn-off-led-2" class='btn btn-info' style="background-color: #023859"
@@ -78,58 +79,64 @@
                 </div>
             </div>
             <br>
-            <button id="turn-off-all" type='button' style="background-color: #0378A6; border: lightskyblue" class="btn btn-success btn-lg">O</button>
+            <button id="turn-off-all" type='button' style="background-color: #0378A6; border: lightskyblue"
+                class="btn btn-success btn-lg">O</button>
             <button id="eeprom-save" type='button' style="background-color: #0378A6; border: lightskyblue"
                 class="btn btn-success btn-lg">E</button>
+            <button id="set-port" type='button' style="background-color: #0378A6; border: lightskyblue"
+                class="btn btn-success btn-lg">Set port</button>
         </div>
         <br>
         <div class="alert alert-info" style="text-align: justify" role="alert">
             <h4 class="alert-heading">Instructions</h4>
             <hr>
-            <p>R, NSwitch: Read the NSwitch switch (S0 or S1) and return a 0 or a 1 depending on whether it is low or high.</p>
+            <p>R, NSwitch: Read the NSwitch switch (S0 or S1) and return a 0 or a 1 depending on whether it is low or
+                high.</p>
             <p>W, NLed, StatusLed: Writes the LED Nled (L0 or L1) in the status StatusLED (1 or 0).</p>
             <p>A, NLed, value: Writes the Nled LED (L0 or L1) with the corresponding analog value (PWM) (0 to 255).</p>
-            <p>B, NLed, frequency: Generates High and Low pulses on the NLed LED with the indicated frequency. The unit of frequency is 10ms. 
+            <p>B, NLed, frequency: Generates High and Low pulses on the NLed LED with the indicated frequency. The unit
+                of frequency is 10ms.
                 The frequency range is from 1 to 100, that is, with a range of 10ms to 1000ms.</p>
             <p>Or: Turn off all LEDs.</p>
         </div>
 
-        
+
         <script>
             const electron = require('electron');
-            const {ipcRenderer} = electron;
+            const {
+                ipcRenderer
+            } = electron;
             const setPort = document.getElementById("set-port");
 
             setPort.addEventListener('click', () => {
-
-                const port = document.getElementById("port-number").value;
-                
-                ipcRenderer.send('set-port', {
-                    'port': port
-                });
+                ipcRenderer.send('set-port');
 
             });
 
             const notFoundPortAlert = document.getElementById('not-found-port');
-            
+
             ipcRenderer.on("not-found-port", (e, item) => {
-                console.log('llego not-found');
                 if (item.status == 404) {
                     notFoundPortShow();
                 }
             });
 
             ipcRenderer.on('success', (e, item) => {
-                console.log("llego success");
-                
+
                 if (item.status == 200) {
                     notFoundPortHide();
                 }
             });
 
-            ipcRenderer.on('read-switch-0', (e, item) => {
-                console.log("hola");
+            ipcRenderer.on('LedStatus', (e, item) => {
+                if(item.line == 1){
+                    window.alert("Prendido");
+                }else if(item.line == 0){
+                    window.alert("apagado");
+                }
             });
+
+
             function notFoundPortShow() {
                 notFoundPortAlert.style.display = 'block'
             }
@@ -138,14 +145,12 @@
                 notFoundPortAlert.style.display = 'none'
             }
 
-            const readSwitch0 = document.getElementById("read-switch-0")
-            readSwitch0.addEventListener('click', () => {
-                ipcRenderer.send('read-switch-0');
+            document.querySelector("#read-switch-0-b").addEventListener('click', () => {
+                ipcRenderer.send('readswitch0');
             });
 
-            const readSwitch1 = document.getElementById("read-switch-1")
-            readSwitch1.addEventListener('click', () => {
-                ipcRenderer.send('read-switch-1');
+            document.querySelector("#read-switch-1-b").addEventListener('click', () => {
+                ipcRenderer.send('readswitch1');
             });
 
             const turnOnLed1 = document.getElementById("turn-on-led-1")
@@ -171,15 +176,11 @@
             const turnOnLed1Analogic = document.getElementById('turn-on-led-1-analogic')
             turnOnLed1Analogic.addEventListener('click', () => {
                 const analogicValue1 = document.getElementById('analogic-value-1').value;
-                console.log('entre');
                 if ((parseInt(analogicValue1, 10) || analogicValue1 == '0') && 0 <= parseInt(analogicValue1,
                         10) &&
                     parseInt(analogicValue1, 10) <= 255) {
-                    console.log('pase validacon');
                     ipcRenderer.send('turn-on-led-1-analogic', analogicValue1);
-                }else{
-                    alert("Ingrese un valor válido")
-                }
+                } else {}
             });
 
             const turnOnLed2Analogic = document.getElementById('turn-on-led-2-analogic');
@@ -189,9 +190,7 @@
                         10) &&
                     parseInt(analogicValue2, 10) <= 255) {
                     ipcRenderer.send('turn-on-led-2-analogic', analogicValue2);
-                }else{
-                    alert("Ingrese un valor válido")
-                }
+                } else {}
             });
 
             const frequencyPulsesLed1 = document.getElementById('frequency-pulses-led-1');
@@ -200,9 +199,7 @@
                 if (parseInt(frequencyValue1) && 1 <= parseInt(frequencyValue1) && parseInt(frequencyValue1) <=
                     100) {
                     ipcRenderer.send('frequency-pulses-led-1', frequencyValue1);
-                }else{
-                    alert("Ingrese un valor válido")
-                }
+                } else {}
             });
 
             const frequencyPulsesLed2 = document.getElementById('frequency-pulses-led-2');
@@ -211,9 +208,7 @@
                 if (parseInt(frequencyValue2) && 1 <= parseInt(frequencyValue2) && parseInt(frequencyValue2) <=
                     100) {
                     ipcRenderer.send('frequency-pulses-led-2', frequencyValue2);
-                }else{
-                    alert("Ingrese un valor válido")
-                }
+                } else {}
             });
 
             const turnOffAll = document.getElementById('turn-off-all')
@@ -225,8 +220,6 @@
             eepromSave.addEventListener('click', () => {
                 ipcRenderer.send('eeprom-save');
             });
-
-            
         </script>
 
     </div>

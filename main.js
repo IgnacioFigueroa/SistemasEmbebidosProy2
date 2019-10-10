@@ -35,8 +35,7 @@ app.on('ready',() => {
 });
 
 //
-ipcMain.on("set-port", (e, item) =>{
-    console.log("Boton apretado")
+ipcMain.on("set-port",  e =>{
     SerialPort.list((err, ports) => {
         ports.forEach((eachPort) => {
             if (eachPort.manufacturer.includes('Arduino')){
@@ -48,40 +47,28 @@ ipcMain.on("set-port", (e, item) =>{
             }
         })
     });
-
-    
 });
 
-ipcMain.on('read-switch-0', () => {
+ipcMain.on('readswitch0', () => {
     console.log("Entra en el s0");
     if(port){
-        port.write('R,S0', (err) => {
-            if(err){
-                console.log("Error:", err.message)
-            }
-        });
-        parser.on('data', line => console.log(`> ${line}`));
-        mainWindow.webContents.send('success', {status:200});
+        port.write('R,S0');
     }else{
-        console.log('nope')
         mainWindow.webContents.send('not-found-port', {status:404});
     }
 });
 
-ipcMain.on('read-switch-1', () => {
-    if(port){
-        port.write('R,S1', (err) => {
-            if(err){
-                console.log("Error:", err.message)
-            }
-        });
-        parser.on('data', line => console.log(`> ${line}`));
-        mainWindow.webContents.send('success', {status:200});
-
+ipcMain.on('readswitch1', () => {
+    console.log("Entra en el s1");
+    if(port){       
+        port.write('R,S1');
     }else{
         mainWindow.webContents.send("not-found-port", {status:404})
-    }
-    
+    }   
+});
+
+parser.on('data', line => {
+    mainWindow.webContents.send('LedStatus', {status:404, line:line});
 });
 
 ipcMain.on('turn-on-led-1', () => {
@@ -96,6 +83,7 @@ ipcMain.on('turn-on-led-1', () => {
         mainWindow.webContents.send('not-found-port', {status:404});
     }
 });
+
 ipcMain.on('turn-on-led-2', () => {
     if(port){
         port.write('W,L1,1', (err) => {
@@ -146,7 +134,7 @@ ipcMain.on('turn-on-led-1-analogic', (e, item) => {
     }else{
         mainWindow.webContents.send('not-found-port', {status:404});
     }
-})
+});
 
 ipcMain.on('turn-on-led-2-analogic', (e, item) => {
     if(port){
@@ -159,7 +147,7 @@ ipcMain.on('turn-on-led-2-analogic', (e, item) => {
     }else{
         mainWindow.webContents.send('not-found-port', {status:404});
     }
-})
+});
 
 ipcMain.on('frequency-pulses-led-1', (e, item) => {
     if(port){
@@ -172,7 +160,7 @@ ipcMain.on('frequency-pulses-led-1', (e, item) => {
     }else{
         mainWindow.webContents.send('not-found-port', {status:404});
     }
-})
+});
 
 ipcMain.on('frequency-pulses-led-2', (e, item) => {
     if(port){
@@ -185,7 +173,7 @@ ipcMain.on('frequency-pulses-led-2', (e, item) => {
     }else{
         mainWindow.webContents.send('not-found-port', {status:404});
     }
-})
+});
 
 ipcMain.on('turn-off-all', () =>{
     if(port){
